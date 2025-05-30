@@ -1,3 +1,4 @@
 # node_modules é sempre ignorado
 node_modules/
 package-lock.json
+public/uploads

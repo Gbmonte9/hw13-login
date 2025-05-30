@@ -3,3 +3,15 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  form(action="/index" method="post")
+    label(for="vemail") Email: 
+    input(type="email" name="vemail" required)
+    br
+    label(for="vsenha") Senha: 
+    input(type="password" name="vsenha" required)
+    br
+    br
+    button(type="submit") Entrar
+    br
+  a(href="/cadastro") Criar uma conta

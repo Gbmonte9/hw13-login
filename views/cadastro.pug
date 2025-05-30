@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  form(action="/cadastro" method="post" enctype="multipart/form-data")
+    label(for="vnome") Nome: 
+    input(type="text" name="vnome" id="vnome" required)
+    br
+
+    label(for="vemail") Email: 
+    input(type="email" name="vemail" id="vemail" required)
+    br
+
+    label(for="vsenha") Senha: 
+    input(type="password" name="vsenha" id="vsenha" required)
+    br
+
+    label(for="vsenha1") Confirmar Senha: 
+    input(type="password" name="vsenha1" id="vsenha1" required)
+    br
+
+    label(for="vavatar") Avatar:
+    input(type="file" name="vavatar" id="vavatar" required)
+    br
+    br
+
+    button(type="submit") Cadastrar
+
+  br
+  a(href="/") Voltar
