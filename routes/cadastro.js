@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   res.render('cadastro', { title: 'Express' });
 });
 
-const uploadDir = path.join(__dirname, 'public', 'uploads');
+const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });

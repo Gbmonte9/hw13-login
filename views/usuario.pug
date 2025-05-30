@@ -2,4 +2,8 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Nome: #{user.nome}
+  p E-mail: #{user.email}
+  if user.file
+    p Foto de Perfil:
+    img(src='/' + user.file, alt='Foto de perfil', width='200')
