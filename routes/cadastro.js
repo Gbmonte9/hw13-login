@@ -31,14 +31,16 @@ const upload = multer({ storage });
 router.post('/', upload.single('vavatar'), async (req, res) => {
   const { vnome, vemail, vsenha, vsenha1 } = req.body;
   const avatarFile = req.file;
+  let verificacao = true;
   const id = nanoid(); 
 
   if (!vnome || !vemail || !vsenha || !vsenha1) {
-    return res.render('cadastro', { title: 'Cadastro', error: 'Preencha todos os campos.' });
+    return res.render('cadastro', { title: 'Cadastro', message: 'Preencha todos os campos.', verificacao: false });
   }
 
   if (vsenha !== vsenha1) {
-    return res.render('cadastro', { title: 'Cadastro', error: 'Senhas não coincidem.' });
+    verificacao = false;
+    return res.render('cadastro', { title: 'Cadastro', message: 'Senhas não coincidem.', verificacao: false });
   }
 
   try {
@@ -52,14 +54,14 @@ router.post('/', upload.single('vavatar'), async (req, res) => {
       [id, vnome.trim(), vemail, hashedPassword, avatarFilename]
     );
 
-    res.render('cadastro', { title: 'Cadastro', success: 'Usuário cadastrado com sucesso!' });
+    res.render('cadastro', { title: 'Cadastro', message: 'Usuário cadastrado com sucesso!', verificacao: true });
   } catch (err) {
     console.error(err);
     let errorMsg = 'Erro ao cadastrar usuário.';
     if (err.code === '23505') {
       errorMsg = 'Este e-mail já está cadastrado.';
     }
-    res.render('cadastro', { title: 'Cadastro', error: errorMsg });
+    res.render('cadastro', { title: 'Cadastro', message: errorMsg, verificacao: false });
   }
 });
 

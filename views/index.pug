@@ -1,17 +1,31 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-6
+        h1.text-center.text-primary= title
+        p.text-center Welcome to #{title}
 
-  form(action="/usuario" method="post")
-    label(for="vemail") Email: 
-    input(type="email" name="vemail" required)
-    br
-    label(for="vsenha") Senha: 
-    input(type="password" name="vsenha" required)
-    br
-    br
-    button(type="submit") Entrar
-    br
-  a(href="/cadastro") Criar uma conta
+        if message
+          if verificacao
+            .alert.alert-success(role="alert")= message
+          else
+            .alert.alert-danger(role="alert")= message
+
+        form(action="/usuario" method="post" class="border p-4 rounded shadow bg-light")
+          .mb-3
+            label.form-label(for="vemail") Email
+            input.form-control(
+              type="email" 
+              name="vemail" 
+              required 
+              value=(typeof vemail !== 'undefined' ? vemail : '')
+            )
+          .mb-3
+            label.form-label(for="vsenha") Senha
+            input.form-control(type="password" name="vsenha" required)
+          button.btn.btn-success.w-100(type="submit") Entrar
+
+        .text-center.mt-3
+          a(href="/cadastro" class="text-decoration-none") Criar uma conta

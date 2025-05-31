@@ -4,37 +4,34 @@ const db = require('../db');
 const { comparePasswords } = require('../bcrypt');
 
 // Rota de exibição do usuário (GET)
-router.get('/', async function(req, res, next) {
-    return res.render('index', { title: 'Express'});
+router.get('/', function(req, res, next) {
+    res.redirect('/');
 });
 
 router.post('/', async function(req, res, next) {
   const { vemail, vsenha } = req.body;
+  let verificacao = true;
 
   try {
 
     const user = await db.oneOrNone('SELECT * FROM usuarios WHERE email = $1', [vemail]);
 
     if (!user) {
-      return res.render('index', { title: 'Express', error: 'Usuário não encontrado.' });
+      return res.render('index', { title: 'Index', message: 'Usuário não encontrado.', verificacao: false });
     }
 
     const acesso = await comparePasswords(vsenha, user.senha); 
 
     if (!acesso) {
-      return res.render('index', { title: 'Express', error: 'Senha incorreta.' });
+      return res.render('index', { title: 'Index', message: 'Senha incorreta.', verificacao: false });
     }
 
     res.redirect(`/usuario/${user.id}`);
 
-    router.get('/:id', function(req, res, next) {
-      const id = req.params.id;
-      res.render('usuario', { title: 'Usuario' });
-    });
 
   } catch (err) {
     console.error(err);
-    res.render('index', { title: 'Express', error: 'Erro no login.' });
+    res.render('index', { title: 'Index', message: 'Erro no login.', verificacao: false });
   }
 });
 
@@ -46,13 +43,13 @@ router.get('/:id', async function(req, res, next) {
     const user = await db.oneOrNone('SELECT * FROM usuarios WHERE id = $1', [id]);
 
     if (!user) {
-      return res.render('index', { title: 'Express', error: 'Usuário não encontrado.' });
+      return res.render('index', { title: 'Index', message: 'Usuário não encontrado.', verificacao: false });
     }
 
     res.render('usuario', { title: 'Usuário', user });
   } catch (err) {
     console.error(err);
-    res.render('index', { title: 'Express', error: 'Erro ao buscar usuário.' });
+    res.render('index', { title: 'Index', message: 'Erro ao buscar usuário.', verificacao: false });
   }
 });
 

@@ -1,9 +1,27 @@
 extends layout
 
 block content
-  h1= title
-  p Nome: #{user.nome}
-  p E-mail: #{user.email}
-  if user.file
-    p Foto de Perfil:
-    img(src='/' + user.file, alt='Foto de perfil', width='200')
+  .container.mt-5
+    .card.mx-auto(style="max-width: 400px;")
+      .card-body.text-center
+        h1.card-title= title
+        p.card-text
+          strong Nome: 
+          | #{user.nome}
+        p.card-text
+          strong E-mail: 
+          | #{user.email}
+        if user.file
+          p.card-text.mt-3 Foto de Perfil:
+          img.card-img-top.mx-auto.d-block(
+            src='/' + user.file, 
+            alt='Foto de perfil', 
+            style='max-width: 200px; border-radius: 10px;'
+          )
+
+        // Botões alinhados horizontalmente e com espaçamento
+        .d-flex.justify-content-center.mt-4.gap-3
+          a.btn.btn-secondary(href="/") Voltar
+          a.btn.btn-primary(href=`/download/${user.id}`) Baixar
+          a.btn.btn-warning(href=`/editar/${user.id}`) Editar
+          a.btn.btn-danger(href=`/delete/${user.id}`) Deletar

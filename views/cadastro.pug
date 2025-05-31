@@ -1,32 +1,40 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-6
+        h1.text-center.text-primary= title
+        p.text-center Welcome to #{title}
 
-  form(action="/cadastro" method="post" enctype="multipart/form-data")
-    label(for="vnome") Nome: 
-    input(type="text" name="vnome" id="vnome" required)
-    br
+        if message
+          if verificacao
+            .alert.alert-success(role="alert")= message
+          else
+            .alert.alert-danger(role="alert")= message
 
-    label(for="vemail") Email: 
-    input(type="email" name="vemail" id="vemail" required)
-    br
+        form(action="/cadastro" method="post" enctype="multipart/form-data" class="border p-4 rounded shadow bg-light")
+          .mb-3
+            label.form-label(for="vnome") Nome
+            input.form-control(type="text" name="vnome" id="vnome" required value=(typeof vnome !== 'undefined' ? vnome : ''))
 
-    label(for="vsenha") Senha: 
-    input(type="password" name="vsenha" id="vsenha" required)
-    br
+          .mb-3
+            label.form-label(for="vemail") Email
+            input.form-control(type="email" name="vemail" id="vemail" required value=(typeof vemail !== 'undefined' ? vemail : ''))
 
-    label(for="vsenha1") Confirmar Senha: 
-    input(type="password" name="vsenha1" id="vsenha1" required)
-    br
+          .mb-3
+            label.form-label(for="vsenha") Senha
+            input.form-control(type="password" name="vsenha" id="vsenha" required)
 
-    label(for="vavatar") Avatar:
-    input(type="file" name="vavatar" id="vavatar" required)
-    br
-    br
+          .mb-3
+            label.form-label(for="vsenha1") Confirmar Senha
+            input.form-control(type="password" name="vsenha1" id="vsenha1" required)
 
-    button(type="submit") Cadastrar
+          .mb-3
+            label.form-label(for="vavatar") Avatar
+            input.form-control(type="file" name="vavatar" id="vavatar" required)
 
-  br
-  a(href="/") Voltar
+          button.btn.btn-primary.w-100(type="submit") Cadastrar
+
+        .text-center.mt-3
+          a(href="/" class="text-decoration-none") Voltar
