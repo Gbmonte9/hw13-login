@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-6
+        h1.text-center.text-primary= title
+        p.text-center Welcome to #{title}
+
+        if message
+          if verificacao
+            .alert.alert-success(role="alert")= message
+          else
+            .alert.alert-danger(role="alert")= message
+
+        form(action=`/usuario/${user.id}/atualizar` method="post" enctype="multipart/form-data" class="border p-4 rounded shadow bg-light")
+          .mb-3
+            label.form-label(for="vnome") Nome
+            input.form-control(type="text" name="vnome" id="vnome" required value=user.nome)
+
+          .mb-3
+            label.form-label(for="vemail") Email
+            input.form-control(type="email" name="vemail" id="vemail" required value=user.email)
+
+          .mb-3
+            label.form-label(for="vsenha") Senha
+            input.form-control(type="password" name="vsenha" id="vsenha" placeholder="Digite nova senha (opcional)")
+
+          .mb-3
+            label.form-label(for="vavatar") Avatar :  
+            // Mostra a imagem atual se existir
+            if user.file
+              img(src=`/${user.file}` alt="Avatar do usuário" class="img-thumbnail mb-2" style="max-width: 150px;")
+            input.form-control(type="file" name="vavatar" id="vavatar")
+
+          button.btn.btn-warning.w-100(type="submit") Atualizar
+
+        .text-center.mt-3
+          a(href=`/usuario/${user.id}` class="text-decoration-none") Voltar

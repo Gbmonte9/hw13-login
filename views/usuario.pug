@@ -1,7 +1,16 @@
 extends layout
 
 block content
-  .container.mt-5
+  .container.mt-3
+    if message
+      .alert.alert-dismissible.fade.show(
+        class=verificacao ? 'alert-success' : 'alert-danger',
+        role='alert'
+      )
+        | #{message}
+        button.btn-close(type='button', data-bs-dismiss='alert', aria-label='Close')
+
+    // Conteúdo principal abaixo
     .card.mx-auto(style="max-width: 400px;")
       .card-body.text-center
         h1.card-title= title
@@ -19,9 +28,8 @@ block content
             style='max-width: 200px; border-radius: 10px;'
           )
 
-        // Botões alinhados horizontalmente e com espaçamento
         .d-flex.justify-content-center.mt-4.gap-3
           a.btn.btn-secondary(href="/") Voltar
-          a.btn.btn-primary(href=`/download/${user.id}`) Baixar
-          a.btn.btn-warning(href=`/editar/${user.id}`) Editar
-          a.btn.btn-danger(href=`/delete/${user.id}`) Deletar
+          a.btn.btn-primary(href=`/usuario/${user.id}/download`) Baixar
+          a.btn.btn-warning(href=`/usuario/${user.id}/editar`) Editar
+          a.btn.btn-danger(href=`/usuario/${user.id}/deleta` onclick="return confirm('Tem certeza que deseja deletar este usuário?')") Deletar
